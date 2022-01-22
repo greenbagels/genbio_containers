@@ -1,5 +1,5 @@
 # Base debian image
-# Image: registry.gitlab.com/roysomak4/genbio_containers/genbio_base:buster
+# Image: registry.gitlab.com/roysomak4/genbio_containers/genbio_base:bullseye
 
 FROM bitnami/minideb:bullseye-amd64
 

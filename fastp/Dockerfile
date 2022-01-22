@@ -17,7 +17,7 @@ RUN wget https://github.com/OpenGene/fastp/archive/refs/tags/v${APP_VER}.tar.gz 
     cp fastp /home/bioseq/fastp
 
 # final image
-FROM registry.gitlab.com/roysomak4/genbio_containers/genbio_base:buster
+FROM registry.gitlab.com/roysomak4/genbio_containers/genbio_base:bullseye
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
     function="Docker image with fastp"
