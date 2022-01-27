@@ -1,0 +1,2 @@
+packages for compiling samtools
+swupd bundle-add c-basic make devpkg-bzip2 devpkg-ncurses devpkg-zlib devpkg-xz curl wget git devpkg-curl devpkg-openssl 

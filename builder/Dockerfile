@@ -1,9 +1,18 @@
-# App builder image for compiling C/C++ apps
+# App builder image for compiling C/C++ and other apps
 # Image: registry.gitlab.com/roysomak4/genbio_containers/builder:c-cpp-v1
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/genbio_base:bullseye
+FROM clearlinux:latest
 
-USER bioseq
-WORKDIR /home/bioseq
-
-RUN sudo install_packages build-essential wget curl zlib1g-dev gcc make g++ cmake git libdeflate-dev libisal-dev dh-autoreconf libbz2-dev liblzma-dev libcurl4-gnutls-dev libssl-dev libncurses5-dev perl
+RUN swupd update --quiet -y && \
+    swupd bundle-add \
+        c-basic \
+        make \
+        devpkg-bzip2 \
+        devpkg-ncurses \
+        devpkg-zlib \
+        devpkg-xz \
+        curl \
+        wget \
+        git \
+        devpkg-curl \
+        devpkg-openssl
