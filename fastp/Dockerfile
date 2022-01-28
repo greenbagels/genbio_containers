@@ -1,32 +1,43 @@
 # Fastp app
-# Image: roysomak4/fastp
+# Image: registry.gitlab.com/roysomak4/genbio_containers/fastp
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:c-cpp-v1 AS builder
+FROM clearlinux:latest AS builder
 
-USER bioseq
-WORKDIR /home/bioseq
+ENV FASTP_VER=0.23.2 \
+    PARALLEL_VER=20211222 \
+	CLEAR_VER=35750
 
-ENV APP_VER=0.23.2
+RUN swupd bundle-add --no-progress curl && \
+    curl -sL https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-Linux-x86_64.sh \
+        -o /tmp/mambaforge.sh && \
+    sh /tmp/mambaforge.sh -bfp /usr && \
+    # install minimal clearlinux OS for target image
+    swupd os-install \
+        --no-progress \
+        --no-boot-update \
+        --no-script \
+        --version ${CLEAR_VER} \
+        --path /install_root \
+        --statedir /swupd-state \
+        --bundles os-core && \
+    # install bwa and samtools
+    mamba create -qy -p /usr/local \
+        -c bioconda \
+        fastp==${FASTP_VER} \
+        parallel==${PARALLEL_VER} && \
+    # remove ancillary files not required in final image
+    rm -rf /usr/local/share /usr/local/conda-meta /usr/local/man
 
-# install build dependencies
-# zlib is required by fasp during runtime
-RUN wget https://github.com/OpenGene/fastp/archive/refs/tags/v${APP_VER}.tar.gz && \
-    tar -zxvf v${APP_VER}.tar.gz && \
-    cd fastp-${APP_VER} && \
-    make -j 6 && \
-    cp fastp /home/bioseq/fastp
-
-# final image
-FROM registry.gitlab.com/roysomak4/genbio_containers/genbio_base:bullseye
+# create final minimal OS image with apps
+FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with fastp"
+    function="Docker image with bwa and samtools"
+
+COPY --from=builder /install_root /
+COPY --from=builder /usr/local /usr/local
+
+RUN useradd bioseq
 
 USER bioseq
 WORKDIR /home/bioseq
-
-COPY --from=builder /home/bioseq/fastp ./
-
-RUN sudo install_packages libisal2 libdeflate0 parallel && \
-    chmod a+x fastp && \
-    sudo mv fastp /usr/local/bin/
