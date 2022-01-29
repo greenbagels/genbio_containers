@@ -5,7 +5,7 @@ FROM clearlinux:latest
 
 ENV CLEAR_VER=35750
 
-RUN swupd bundle-add --no-progress curl && \
+RUN swupd bundle-add --no-progress curl wget less which git os-core-search unzip && \
     curl -sL https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-Linux-x86_64.sh \
         -o /tmp/mambaforge.sh && \
     sh /tmp/mambaforge.sh -bfp /usr && \
