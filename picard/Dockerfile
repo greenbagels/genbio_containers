@@ -1,33 +1,35 @@
-FROM clearlinux:latest AS builder
+# Picard tools
+# Image: registry.gitlab.com/roysomak4/genbio_containers/picard
 
-# Download and install mamba into /usr/bin
-ENV MAMBAFORGE_VERSION=4.10.3-1
-RUN swupd bundle-add --no-progress curl && \
-    curl -sL https://github.com/conda-forge/miniforge/releases/download/${MAMBAFORGE_VERSION}/Mambaforge-pypy3-Linux-x86_64.sh -o /tmp/mambaforge.sh && \
-    sh /tmp/mambaforge.sh -bfp /usr && rm -f /tmp/mambaforge.sh
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
 
-# Install a minimal versioned OS into /install_root
-ENV CLEAR_VERSION=34810
-RUN swupd os-install --no-progress --no-boot-update --no-scripts \
-    --version ${CLEAR_VERSION} \
-    --path /install_root \
-    --statedir /swupd-state \
-    --bundles os-core
+ENV PICARD_VER=2.26.10
 
-# Use mamba to install remaining tools/dependencies into /usr/local
-ENV PICARD_VERSION=2.25.6
-RUN mamba create -qy -p /usr/local \
-        -c bioconda \
-        picard-slim==${PICARD_VERSION}
+# install FASTQC
+RUN wget https://github.com/broadinstitute/picard/releases/download/${PICARD_VER}/picard.jar && \
+    mkdir /usr/local/bin && \
+    mv picard.jar /usr/local/bin/ && \
+    # install java & perl runtime os package
+    swupd os-install \
+        --no-progress \
+        --no-boot-update \
+        --no-script \
+        --version ${CLEAR_VER} \
+        --path /install_root \
+        --statedir /swupd-state \
+        --bundles os-core,java-runtime
 
-# Deploy the minimal OS and target tools into a blank image
+# create final minimal OS image with apps
 FROM scratch
+
+LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
+    function="Docker image with Picard tools"
+
 COPY --from=builder /install_root /
-COPY --from=builder /usr/local /usr/local
 
-ARG GIT_COMMIT
-LABEL org.opencontainers.image.authors="Cyriac Kandoth <ckandoth@gmail.com>" \
-    org.opencontainers.image.source="https://github.com/uclahs/batch-tools/tree/"$GIT_COMMIT"/picard/Dockerfile" \
-    org.opencontainers.image.revision=$GIT_COMMIT
+RUN useradd bioseq
 
-# BUILD_CMD: docker build --pull --build-arg GIT_COMMIT=$(git rev-parse --short HEAD) -t picard:2.25.6 .
+USER bioseq
+WORKDIR /home/bioseq
+
+COPY --from=builder /usr/local/bin/picard.jar /home/bioseq/picard.jar
