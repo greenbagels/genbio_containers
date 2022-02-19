@@ -1,18 +1,14 @@
 # Fastp app
 # Image: registry.gitlab.com/roysomak4/genbio_containers/fastp
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v1 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
 
-ENV FASTP_VER=0.23.2 \
-    PARALLEL_VER=20211222
+ENV FASTP_VER=0.23.2
 
 # install fastp
-RUN mamba create -qy -p /usr/local \
-        -c bioconda \
-        fastp==${FASTP_VER} \
-        parallel==${PARALLEL_VER} && \
-    # remove ancillary files not required in final image
-    rm -rf /usr/local/share /usr/local/conda-meta /usr/local/man
+RUN mkdir -p /usr/local/bin && \
+    wget http://opengene.org/fastp/fastp.0.23.1 -O /usr/local/bin/fastp && \
+    chmod a+x /usr/local/bin/fastp
 
 # create final minimal OS image with apps
 FROM scratch
