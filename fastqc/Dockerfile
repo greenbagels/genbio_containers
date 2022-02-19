@@ -10,10 +10,9 @@ RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v${FAS
     unzip fastqc.zip && \
     rm fastqc.zip && \
     mkdir /usr/local/bin && \
-    mv FastQC /usr/local/bin/ && \
-    echo "perl /usr/local/bin/FastQC/fastqc" > /usr/local/bin/fastqc && \
+    mv FastQC/* /usr/local/bin/ && \
     chmod +x /usr/local/bin/fastqc && \
-    # install java runtime os package
+    # install java & perl runtime os package
     swupd os-install \
         --no-progress \
         --no-boot-update \
