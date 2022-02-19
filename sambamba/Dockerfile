@@ -12,9 +12,6 @@ RUN wget https://github.com/biod/sambamba/releases/download/v${SAMBAMBA_VER}/sam
     chmod +x sambamba && \
     mkdir /usr/local/bin && \
     mv sambamba /usr/local/bin/
-    # wget https://github.com/bwa-mem2/bwa-mem2/releases/download/v2.2.1/bwa-mem2-2.2.1_x64-linux.tar.bz2 && \
-    # tar -xjf bwa-mem2-2.2.1_x64-linux.tar.bz2 && \
-    # mv bwa-mem2-2.2.1_x64-linux/bwa-mem2* /usr/local/bin/
 
 # create final minimal OS image with apps
 FROM scratch
@@ -22,11 +19,10 @@ FROM scratch
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
     function="Docker image with sambamba"
 
-# COPY --from=builder /install_root /
+COPY --from=builder /install_root /
 COPY --from=builder /usr/local /usr/local
-COPY ./bwa-mem2* /usr/local/bin/
 
-# RUN useradd bioseq
+RUN useradd bioseq
 
-# USER bioseq
-# WORKDIR /home/bioseq
+USER bioseq
+WORKDIR /home/bioseq
