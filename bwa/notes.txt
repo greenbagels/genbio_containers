@@ -1,0 +1,7 @@
+compiling bwa-mem2 on clearlinux
+
+# to compile bwa on clearlinux we need to install gcc/g++ version 9, since version 11 (part of the bundle) causes compilation error.
+# To enable it, update the CXX environment variable
+# export CXX=g++-9
+# modify the makefile for bwa where it checks for CXX flag == g++ (set it to g++-9)
+bwa-mem2 errors out while compiling on gcc v11
