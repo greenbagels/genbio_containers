@@ -1,4 +1,4 @@
-# bwa-mem2 and Samtools app
+# bwa-mem2 and sambamba app
 # Image: registry.gitlab.com/roysomak4/genbio_containers/bwa-mem2_sambamba
 
 FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
@@ -33,7 +33,7 @@ RUN wget https://github.com/bwa-mem2/bwa-mem2/releases/download/v${BWA_VER}/bwa-
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with bwa"
+    function="Docker image with bwa and sambamba"
 
 COPY --from=builder /install_root /
 COPY --from=builder /usr/local /usr/local
