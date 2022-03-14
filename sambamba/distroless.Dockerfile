@@ -17,6 +17,7 @@ RUN wget https://github.com/biod/sambamba/releases/download/v${SAMBAMBA_VER}/sam
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with sambamba"
+    function="Docker image with sambamba" \
+    source="https://gitlab.com/roysomak4/genbio_containers"
 
 COPY --from=builder /usr/local/bin /usr/local/bin

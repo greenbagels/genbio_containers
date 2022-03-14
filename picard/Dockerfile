@@ -23,7 +23,8 @@ RUN wget https://github.com/broadinstitute/picard/releases/download/${PICARD_VER
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with Picard tools"
+    function="Docker image with Picard tools" \
+    source="https://gitlab.com/roysomak4/genbio_containers"
 
 COPY --from=builder /install_root /
 

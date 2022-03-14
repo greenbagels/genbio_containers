@@ -33,12 +33,8 @@ RUN wget https://github.com/bwa-mem2/bwa-mem2/releases/download/v${BWA_VER}/bwa-
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with bwa and sambamba"
+    function="Docker image with bwa and sambamba" \
+    source="https://gitlab.com/roysomak4/genbio_containers"
 
 COPY --from=builder /install_root /
 COPY --from=builder /usr/local /usr/local
-
-RUN useradd bioseq
-
-USER bioseq
-WORKDIR /home/bioseq

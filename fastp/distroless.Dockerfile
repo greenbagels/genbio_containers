@@ -15,12 +15,7 @@ RUN mkdir -p /usr/local/bin && \
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with bwa and samtools"
+    function="Docker image with bwa and samtools" \
+    source="https://gitlab.com/roysomak4/genbio_containers"
 
-# COPY --from=builder /install_root /
 COPY --from=builder /usr/local/bin /usr/local/bin
-
-# RUN useradd bioseq
-
-# USER bioseq
-# WORKDIR /home/bioseq
