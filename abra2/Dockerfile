@@ -3,7 +3,7 @@
 
 FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
 
-ENV ABRA_VER=2.24
+ENV ABRA_VER=2.23
 
 # download abra2
 RUN wget https://github.com/mozack/abra2/releases/download/v${ABRA_VER}/abra2-${ABRA_VER}.jar -O /abra2.jar && \
@@ -26,10 +26,4 @@ LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
     function="Docker image with Abra2"
 
 COPY --from=builder /install_root /
-
-RUN useradd bioseq
-
-USER bioseq
-WORKDIR /home/bioseq
-
-COPY --from=builder /usr/local/bin/abra2.jar /home/bioseq/abra2.jar
+COPY --from=builder /usr/local/bin/abra2.jar /usr/bin/abra2.jar
