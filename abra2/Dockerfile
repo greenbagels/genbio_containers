@@ -1,9 +1,10 @@
-# ABRS2
+# Abra2
 # Image: registry.gitlab.com/roysomak4/genbio_containers/abra2
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
-ENV ABRA_VER=2.23
+ENV ABRA_VER=2.23 \
+    CLEAR_VER=36030
 
 # download abra2
 RUN wget https://github.com/mozack/abra2/releases/download/v${ABRA_VER}/abra2-${ABRA_VER}.jar -O /abra2.jar && \

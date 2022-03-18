@@ -1,7 +1,7 @@
 # Fastp app
 # Image: registry.gitlab.com/roysomak4/genbio_containers/fastp
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
 ENV FASTP_VER=0.23.2
 
@@ -14,7 +14,7 @@ RUN mkdir -p /usr/local/bin && \
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with bwa and samtools" \
+    function="Docker image with fastp" \
     source="https://gitlab.com/roysomak4/genbio_containers"
 
 COPY --from=builder /install_root /

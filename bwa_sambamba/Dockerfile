@@ -1,10 +1,10 @@
 # bwa-mem2 and sambamba app
 # Image: registry.gitlab.com/roysomak4/genbio_containers/bwa-mem2_sambamba
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
 ENV BWA_VER=2.2.1 \
-    CLEAR_VER=35750 \
+    CLEAR_VER=36030 \
     SAMBAMBA_VER=0.8.2
 
 # Download bwa-mem2 binaries
@@ -33,7 +33,7 @@ RUN wget https://github.com/bwa-mem2/bwa-mem2/releases/download/v${BWA_VER}/bwa-
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with bwa and sambamba" \
+    function="Docker image with bwa-mem2 and sambamba" \
     source="https://gitlab.com/roysomak4/genbio_containers"
 
 COPY --from=builder /install_root /

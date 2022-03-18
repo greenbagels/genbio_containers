@@ -1,7 +1,7 @@
 # mosdepth app
 # Image: registry.gitlab.com/roysomak4/genbio_containers/mosdepth
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
 ENV MOSDEPTH_VER=0.3.3
 
@@ -15,7 +15,7 @@ RUN wget https://github.com/brentp/mosdepth/releases/download/v${MOSDEPTH_VER}/m
 FROM scratch
 
 LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
-    function="Docker image with sambamba" \
+    function="Docker image with mosdepth" \
     source="https://gitlab.com/roysomak4/genbio_containers"
 
 COPY --from=builder /install_root /

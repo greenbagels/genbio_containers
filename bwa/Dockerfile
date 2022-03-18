@@ -1,10 +1,10 @@
 # bwa-mem2
 # Image: registry.gitlab.com/roysomak4/genbio_containers/bwa-mem2
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
 ENV BWA_VER=2.2.1 \
-    CLEAR_VER=35750
+    CLEAR_VER=36030
 
 # Download bwa-mem2 binaries
 RUN wget https://github.com/bwa-mem2/bwa-mem2/releases/download/v${BWA_VER}/bwa-mem2-${BWA_VER}_x64-linux.tar.bz2 && \

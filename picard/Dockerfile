@@ -1,9 +1,10 @@
 # Picard tools
 # Image: registry.gitlab.com/roysomak4/genbio_containers/picard
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
-ENV PICARD_VER=2.26.10
+ENV PICARD_VER=2.26.10 \
+    CLEAR_VER=36030
 
 # install FASTQC
 RUN wget https://github.com/broadinstitute/picard/releases/download/${PICARD_VER}/picard.jar && \
@@ -27,10 +28,4 @@ LABEL maintainer="Somak Roy<roysomak4@gmail.com>" \
     source="https://gitlab.com/roysomak4/genbio_containers"
 
 COPY --from=builder /install_root /
-
-RUN useradd bioseq
-
-USER bioseq
-WORKDIR /home/bioseq
-
-COPY --from=builder /usr/local/bin/picard.jar /home/bioseq/picard.jar
+COPY --from=builder /usr/local/bin/picard.jar /usr/bin/picard.jar

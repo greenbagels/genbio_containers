@@ -1,12 +1,13 @@
 # FastQC app
 # Image: registry.gitlab.com/roysomak4/genbio_containers/fastqc
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
-ENV FASTQC_VER=0.11.9
+ENV FASTQC_VER=0.11.9 \
+    CLEAR_VER=36030
 
 # install FASTQC
-RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v${FASTQC_VER}.zip -O fastqc.zip && \
+RUN wget --no-check-certificate https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v${FASTQC_VER}.zip -O fastqc.zip && \
     unzip fastqc.zip && \
     rm fastqc.zip && \
     mkdir /usr/local/bin && \

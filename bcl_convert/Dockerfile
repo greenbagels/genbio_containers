@@ -11,7 +11,7 @@ RUN yum install -yq gdb && rpm --install bcl-convert.rpm && \
 
 FROM clearlinux:latest AS stage2
 
-ENV CLEAR_VER=35750
+ENV CLEAR_VER=36030
 
 # install minimal clearlinux OS with C++ standard lib for target image
 RUN swupd os-install \

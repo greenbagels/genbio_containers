@@ -1,10 +1,10 @@
 # bcftools
 # Image: registry.gitlab.com/roysomak4/genbio_containers/bcftools
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
 ENV BCFTOOLS_VER=1.15 \
-    CLEAR_VER=35750
+    CLEAR_VER=36030
 
 # Download bwa-mem2 binaries
 RUN wget https://github.com/samtools/bcftools/releases/download/${BCFTOOLS_VER}/bcftools-${BCFTOOLS_VER}.tar.bz2 -O bcftools.tar.bz2 && \

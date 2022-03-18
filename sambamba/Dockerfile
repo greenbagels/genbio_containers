@@ -1,7 +1,7 @@
 # Sambamba app
 # Image: registry.gitlab.com/roysomak4/genbio_containers/sambamba
 
-FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2 AS builder
+FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
 
 ENV SAMBAMBA_VER=0.8.2
 
