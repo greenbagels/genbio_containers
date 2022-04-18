@@ -1,0 +1,13 @@
+Credit: https://github.com/ht50/FLT3_ITD_ext
+Manuscripts:
+https://www.jmdjournal.org/article/S1525-1578(20)30369-X/fulltext
+https://www.jmdjournal.org/article/S1525-1578(21)00236-1/fulltext
+
+Dependencies for FLT3_ITD_ext script is complex and only worked with Ubuntu 20.04 image.
+
+On an alpine linux base image, sumaclust cannot seem to write to file regardless of the flags provided. Working on troubleshooting it.
+
+Image size difference between Alpine and Ubuntu was <200MB.
+
+There is room for improvement in this script to make it easily usable in a production environment using containers. Many script parameters have been customized to work in the container environment. Users will need to modify the script parameters, i.e location of executables and FLT3 reference provided by the author.
+The FLT3 reference in my settings has been abstracted outside the container to prevent image bloating and portability.
