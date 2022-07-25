@@ -1,4 +1,4 @@
-# bcftools
+# cnvkit
 # Image: registry.gitlab.com/roysomak4/genbio_containers/cnvkit
 
 FROM registry.gitlab.com/roysomak4/genbio_containers/builder:v2-clearlinux AS builder
